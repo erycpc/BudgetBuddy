@@ -67,10 +67,10 @@ export const login = async (req, res) => {
         res.json({
             token,
             user: {
-                id: user._id,
-                name: user.name,
-                email: user.email,
-                avatar: user.avatar
+                id: userExists._id,
+                name: userExists.name,
+                email: userExists.email,
+                avatar: userExists.avatar
             }
         })
     } catch (err) {
