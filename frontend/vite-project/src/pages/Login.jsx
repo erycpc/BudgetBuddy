@@ -66,7 +66,7 @@ return (
           {loading ? 'Logging in...' : 'Login →'}
         </button>
       </form>
-      <p className="switch">Don't have an account? <Link to="/register">Sign Up</Link></p>
+      <p className="switch">Don't have an account? <Link to="/register">Register</Link></p>
     </div>
   )
 }

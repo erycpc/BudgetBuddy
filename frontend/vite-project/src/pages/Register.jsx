@@ -77,7 +77,7 @@ const Register = () => {
           {loading ? 'Creating account...' : 'Create Account →'}
         </button>
       </form>
-      <p className="switch">Already have an account? <Link to="/login">Sign in</Link></p>
+      <p className="switch">Already have an account? <Link to="/login">Login</Link></p>
     </div>
   )
 }

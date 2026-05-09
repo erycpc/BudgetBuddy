@@ -1,0 +1,194 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Syne:wght@700;800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #111111;
+  --surface: #1a1a1a;
+  --surface-2: #222222;
+  --green: #3dff54;
+  --green-dim: rgba(61, 255, 84, 0.1);
+  --green-border: rgba(61, 255, 84, 0.25);
+  --text: #f0f0f0;
+  --text-muted: #888888;
+  --input-bg: #1e1e1e;
+  --input-border: #2e2e2e;
+  --error: #ff4d4d;
+  --radius: 12px;
+}
+
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ───── Auth layout ───── */
+.auth {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(61, 255, 84, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 20%, rgba(61, 255, 84, 0.03) 0%, transparent 50%);
+}
+
+.auth-logo {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--green);
+  text-decoration: none;
+  letter-spacing: -0.5px;
+  margin-bottom: 1.5rem;
+}
+
+.auth-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 6px 14px;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+  letter-spacing: 0.03em;
+}
+
+.auth h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.auth .subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* ───── Form card ───── */
+form {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.input-group input {
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.input-group input::placeholder {
+  color: #444;
+}
+
+.input-group input:focus {
+  border-color: var(--green-border);
+  box-shadow: 0 0 0 3px rgba(61, 255, 84, 0.08);
+}
+
+/* ───── Button ───── */
+button[type='submit'] {
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--green);
+  color: #0a0a0a;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  margin-top: 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+button[type='submit']:hover {
+  opacity: 0.9;
+}
+
+button[type='submit']:active {
+  transform: scale(0.98);
+}
+
+button[type='submit']:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ───── Error + switch ───── */
+.error {
+  color: var(--error);
+  font-size: 0.85rem;
+  background: rgba(255, 77, 77, 0.08);
+  border: 1px solid rgba(255, 77, 77, 0.2);
+  padding: 10px 14px;
+  border-radius: 8px;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+
+.switch {
+  margin-top: 1.25rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.switch a {
+  color: var(--green);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.switch a:hover {
+  text-decoration: underline;
+}
