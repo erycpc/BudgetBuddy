@@ -19,7 +19,10 @@ connectDB() // connects to MongoDB — defined in config/db.js
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:5173' })) // Vite runs on 5173
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://127.0.0.1:5173'],
+  credentials: true
+}))
 app.use(express.json())
 
 // Test route
