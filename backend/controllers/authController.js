@@ -77,3 +77,48 @@ export const login = async (req, res) => {
         res.status(500).json({ message: err.message })
     }
 }
+
+export const updateProfile = async (req, res) => {
+  try {
+    const { name, email } = req.body
+    if (!name || !email) {
+      return res.status(400).json({ message: 'Name and email are required' })
+    }
+
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, email },
+      { new: true }
+    ).select('-password')
+
+    res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      avatar: user.avatar
+    })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
+
+export const changePassword = async (req, res) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+    if (!currentPassword || !newPassword) {
+      return res.status(400).json({ message: 'All fields are required' })
+    }
+
+    const user = await User.findById(req.user._id)
+    const isMatch = await bcrypt.compare(currentPassword, user.password)
+    if (!isMatch) {
+      return res.status(400).json({ message: 'Current password is incorrect' })
+    }
+
+    user.password = newPassword
+    await user.save() // pre-save hook will hash the new password
+    res.json({ message: 'Password updated successfully' })
+  } catch (err) {
+    res.status(500).json({ message: err.message })
+  }
+}
