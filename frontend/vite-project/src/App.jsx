@@ -3,6 +3,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Expenses from './pages/Expenses'
+import Budgets from './pages/Budgets'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 
@@ -24,6 +25,11 @@ function App() {
         <ProtectedRoute>
           <Expenses />
         </ProtectedRoute>
+      } />
+      <Route path='/budgets' element={
+        <ProtectedRoute>
+          <Budgets />
+      </ProtectedRoute>
       } />
     </Routes>
   )
