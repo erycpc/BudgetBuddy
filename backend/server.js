@@ -32,6 +32,9 @@ app.get('/', (req, res) => {
 
 // Routes 
 import authRoutes from './routes/authRoutes.js'
+import expenseRoutes from './routes/expenseRoutes.js'
+
+app.use('/api/expenses', expenseRoutes)
 app.use('/api/auth', authRoutes)
 
 const PORT = process.env.PORT || 5000
