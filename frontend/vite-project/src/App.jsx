@@ -2,6 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
+import Expenses from './pages/Expenses'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 
@@ -19,6 +20,11 @@ function App() {
         </ProtectedRoute>
       } />
       <Route path='*' element={<Navigate to='/login' />} />
+      <Route path='/expenses' element={
+        <ProtectedRoute>
+          <Expenses />
+        </ProtectedRoute>
+      } />
     </Routes>
   )
 }
