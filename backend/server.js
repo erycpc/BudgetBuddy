@@ -1,11 +1,16 @@
-import express from 'express'          // import, not require
+import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
-import connectDB from './config/db.js' // DB logic lives elsewhere
+import connectDB from './config/db.js'
+import authRoutes from './routes/authRoutes.js'
+import expenseRoutes from './routes/expenseRoutes.js'
+import budgetRoutes from './routes/budgetRoutes.js'
+import goalRoutes from './routes/goalRoutes.js'
+import investmentRoutes from './routes/investmentRoutes.js'
 
 dotenv.config()
 
-// Validate environment variables
+// validate env variables
 if (!process.env.MONGO_URI) {
   console.error('Error: MONGO_URI is not defined')
   process.exit(1)
@@ -15,7 +20,7 @@ if (!process.env.JWT_SECRET) {
   process.exit(1)
 }
 
-connectDB() // connects to MongoDB — defined in config/db.js
+connectDB()
 
 const app = express()
 
@@ -25,17 +30,15 @@ app.use(cors({
 }))
 app.use(express.json())
 
-// Test route
 app.get('/', (req, res) => {
   res.json({ message: 'BudgetBuddy API is running' })
 })
 
-// Routes 
-import authRoutes from './routes/authRoutes.js'
-import expenseRoutes from './routes/expenseRoutes.js'
-
-app.use('/api/expenses', expenseRoutes)
 app.use('/api/auth', authRoutes)
+app.use('/api/expenses', expenseRoutes)
+app.use('/api/budgets', budgetRoutes)
+app.use('/api/goals', goalRoutes)
+app.use('/api/investments', investmentRoutes)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
