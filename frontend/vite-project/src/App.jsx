@@ -4,6 +4,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import Expenses from './pages/Expenses'
 import Budgets from './pages/Budgets'
+import Settings from './pages/Settings'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 
@@ -30,6 +31,11 @@ function App() {
         <ProtectedRoute>
           <Budgets />
       </ProtectedRoute>
+      } />
+      <Route path='/settings' element={
+        <ProtectedRoute>
+          <Settings />
+        </ProtectedRoute>
       } />
     </Routes>
   )
