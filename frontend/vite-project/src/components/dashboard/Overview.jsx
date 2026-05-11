@@ -1,23 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import api from '../../services/api'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer
 } from 'recharts'
-
-const monthlyData = [
-  { month: 'Jan', amount: 4200 },
-  { month: 'Feb', amount: 1800 },
-  { month: 'Mar', amount: 3100 },
-  { month: 'Apr', amount: 1400 },
-  { month: 'May', amount: 2800 },
-  { month: 'Jun', amount: 3600 },
-  { month: 'Jul', amount: 3200 },
-  { month: 'Aug', amount: 2100 },
-  { month: 'Sep', amount: 1600 },
-  { month: 'Oct', amount: 2900 },
-  { month: 'Nov', amount: 2400 },
-  { month: 'Dec', amount: 3800 },
-]
 
 const filters = ['Weekly', 'Monthly', 'Yearly', 'Range']
 
@@ -26,7 +12,7 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="chart-tooltip">
         <p className="chart-tooltip-label">{label}</p>
-        <p className="chart-tooltip-value">${payload[0].value.toLocaleString()}</p>
+        <p className="chart-tooltip-value">KES {payload[0].value.toLocaleString()}</p>
       </div>
     )
   }
@@ -35,20 +21,60 @@ const CustomTooltip = ({ active, payload, label }) => {
 
 const Overview = () => {
   const [activeFilter, setActiveFilter] = useState('Yearly')
+  const [monthlyData, setMonthlyData] = useState([])
+  const [stats, setStats] = useState({
+    totalExpenses: 0,
+    totalBudgets: 0,
+    totalGoals: 0
+  })
 
-  const total = monthlyData
-    .reduce((sum, d) => sum + d.amount, 0)
-    .toLocaleString()
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [expRes, budRes, goalRes] = await Promise.all([
+          api.get('/expenses'),
+          api.get('/budgets'),
+          api.get('/goals')
+        ])
+
+        const totalExpenses = expRes.data.reduce(
+          (sum, exp) => sum + exp.amount, 0
+        )
+
+        setStats({
+          totalExpenses,
+          totalBudgets: budRes.data.length,
+          totalGoals: goalRes.data.length
+        })
+
+        const months = ['Jan','Feb','Mar','Apr','May','Jun',
+                        'Jul','Aug','Sep','Oct','Nov','Dec']
+
+        const grouped = months.map((month, index) => {
+          const total = expRes.data
+            .filter(exp => new Date(exp.date).getMonth() === index)
+            .reduce((sum, exp) => sum + exp.amount, 0)
+          return { month, amount: total }
+        })
+
+        setMonthlyData(grouped)
+
+      } catch (err) {
+        console.error(err)
+      }
+    }
+    fetchStats()
+  }, [])
 
   return (
     <div className="overview-grid">
       <div className="revenue-card">
         <div className="revenue-card-top">
           <div>
-            <p className="revenue-label">Revenue</p>
+            <p className="revenue-label">Total Expenses</p>
             <p className="revenue-amount">
-              <span className="revenue-currency">$</span>
-              {total}
+              <span className="revenue-currency">KES</span>
+              {stats.totalExpenses.toLocaleString()}
             </p>
           </div>
           <div className="revenue-filters">
@@ -106,18 +132,26 @@ const Overview = () => {
       <div className="bottom-cards">
         <div className="bottom-card">
           <p className="bottom-card-label">Total Expenses</p>
-          <p className="bottom-card-value">$0.00</p>
-          <p className="bottom-card-sub">No expenses yet</p>
+          <p className="bottom-card-value">
+            KES {stats.totalExpenses.toLocaleString()}
+          </p>
+          <p className="bottom-card-sub">
+            {stats.totalExpenses === 0 ? 'No expenses yet' : 'All time spending'}
+          </p>
         </div>
         <div className="bottom-card">
           <p className="bottom-card-label">Active Budgets</p>
-          <p className="bottom-card-value">0</p>
-          <p className="bottom-card-sub">No budgets set</p>
+          <p className="bottom-card-value">{stats.totalBudgets}</p>
+          <p className="bottom-card-sub">
+            {stats.totalBudgets === 0 ? 'No budgets set' : 'Categories tracked'}
+          </p>
         </div>
         <div className="bottom-card">
           <p className="bottom-card-label">Savings Goals</p>
-          <p className="bottom-card-value">0</p>
-          <p className="bottom-card-sub">No goals yet</p>
+          <p className="bottom-card-value">{stats.totalGoals}</p>
+          <p className="bottom-card-sub">
+            {stats.totalGoals === 0 ? 'No goals yet' : 'Goals in progress'}
+          </p>
         </div>
       </div>
     </div>
