@@ -19,15 +19,43 @@ const CustomTooltip = ({ active, payload, label }) => {
   return null
 }
 
+const filterExpenses = (expenses, filter) => {
+  const now = new Date()
+
+  if (filter === 'Weekly') {
+    const weekAgo = new Date()
+    weekAgo.setDate(now.getDate() - 7)
+    return expenses.filter(exp => new Date(exp.date) >= weekAgo)
+  }
+
+  if (filter === 'Monthly') {
+    return expenses.filter(exp => {
+      const d = new Date(exp.date)
+      return d.getMonth() === now.getMonth() &&
+             d.getFullYear() === now.getFullYear()
+    })
+  }
+
+  if (filter === 'Yearly') {
+    return expenses.filter(exp =>
+      new Date(exp.date).getFullYear() === now.getFullYear()
+    )
+  }
+
+  return expenses
+}
+
 const Overview = () => {
   const [activeFilter, setActiveFilter] = useState('Yearly')
   const [monthlyData, setMonthlyData] = useState([])
+  const [allExpenses, setAllExpenses] = useState([])
   const [stats, setStats] = useState({
     totalExpenses: 0,
     totalBudgets: 0,
     totalGoals: 0
   })
 
+  // fetch all data once on mount
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -37,27 +65,13 @@ const Overview = () => {
           api.get('/goals')
         ])
 
-        const totalExpenses = expRes.data.reduce(
-          (sum, exp) => sum + exp.amount, 0
-        )
+        setAllExpenses(expRes.data)
 
-        setStats({
-          totalExpenses,
+        setStats(prev => ({
+          ...prev,
           totalBudgets: budRes.data.length,
           totalGoals: goalRes.data.length
-        })
-
-        const months = ['Jan','Feb','Mar','Apr','May','Jun',
-                        'Jul','Aug','Sep','Oct','Nov','Dec']
-
-        const grouped = months.map((month, index) => {
-          const total = expRes.data
-            .filter(exp => new Date(exp.date).getMonth() === index)
-            .reduce((sum, exp) => sum + exp.amount, 0)
-          return { month, amount: total }
-        })
-
-        setMonthlyData(grouped)
+        }))
 
       } catch (err) {
         console.error(err)
@@ -66,12 +80,42 @@ const Overview = () => {
     fetchStats()
   }, [])
 
+  // refilter whenever activeFilter or allExpenses changes
+  useEffect(() => {
+    if (allExpenses.length === 0) return
+
+    const filtered = filterExpenses(allExpenses, activeFilter)
+
+    const totalExpenses = filtered.reduce(
+      (sum, exp) => sum + exp.amount, 0
+    )
+
+    setStats(prev => ({ ...prev, totalExpenses }))
+
+    const months = ['Jan','Feb','Mar','Apr','May','Jun',
+                    'Jul','Aug','Sep','Oct','Nov','Dec']
+
+    const grouped = months.map((month, index) => {
+      const total = filtered
+        .filter(exp => new Date(exp.date).getMonth() === index)
+        .reduce((sum, exp) => sum + exp.amount, 0)
+      return { month, amount: total }
+    })
+
+    setMonthlyData(grouped)
+
+  }, [activeFilter, allExpenses])
+
   return (
     <div className="overview-grid">
       <div className="revenue-card">
         <div className="revenue-card-top">
           <div>
-            <p className="revenue-label">Total Expenses</p>
+            <p className="revenue-label">
+              {activeFilter === 'Weekly' ? 'This Week' :
+               activeFilter === 'Monthly' ? 'This Month' :
+               activeFilter === 'Yearly' ? 'This Year' : 'All Time'} Expenses
+            </p>
             <p className="revenue-amount">
               <span className="revenue-currency">KES</span>
               {stats.totalExpenses.toLocaleString()}
