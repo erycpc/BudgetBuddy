@@ -849,3 +849,109 @@ button[type='submit']:disabled {
   border-radius: 8px;
   margin-bottom: 1rem;
 }
+
+/* ───── Goals page ───── */
+.goals-grid {
+  display: flex;
+  gap: 1.25rem;
+}
+
+.goal-card {
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: border-color 0.15s;
+}
+
+.goal-card:hover { border-color: #3a3a3a; }
+
+.goal-card.complete {
+  border-color: var(--green-border);
+  background: var(--green-dim);
+}
+
+.goal-card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.goal-title {
+  font-family: 'Syne', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.goal-days {
+  font-size: 0.75rem;
+  color: var(--green);
+  font-weight: 500;
+}
+
+.goal-days.overdue { color: var(--error); }
+
+.goal-amounts {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.goal-saved {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+}
+
+.goal-target {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.goal-add-money {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.goal-input {
+  flex: 1;
+  background: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: 8px;
+  padding: 0.5rem 0.75rem;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.875rem;
+  outline: none;
+}
+
+.goal-input:focus {
+  border-color: var(--green-border);
+}
+
+.btn-add-money {
+  background: var(--green-dim);
+  border: 1px solid var(--green-border);
+  color: var(--green);
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.btn-add-money:hover {
+  background: rgba(61, 255, 84, 0.15);
+}
