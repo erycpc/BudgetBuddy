@@ -44,6 +44,11 @@ const icons = {
       <polyline points="16 17 21 12 16 7"/>
       <line x1="21" y1="12" x2="9" y2="12"/>
     </svg>
+  ),
+  ai: (
+    <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+      <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+    </svg>
   )
 }
 
@@ -56,7 +61,7 @@ const navItems = [
   { to: '/settings', icon: 'settings', label: 'Settings' },
 ]
 
-const Sidebar = () => {
+const Sidebar = ({ onAIToggle }) => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
 
@@ -87,6 +92,14 @@ const Sidebar = () => {
           </NavLink>
         ))}
       </nav>
+
+      <button
+        className="sidebar-ai"
+        onClick={onAIToggle}
+        title="AI Advisor"
+      >
+        {icons.ai}
+      </button>
 
       <button className="sidebar-logout" onClick={handleLogout} title="Logout">
         {icons.logout}
