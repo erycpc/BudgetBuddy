@@ -6,6 +6,7 @@ import Expenses from './pages/Expenses'
 import Budgets from './pages/Budgets'
 import Goals from './pages/Goals'
 import Settings from './pages/Settings'
+import Investments from './pages/Investments'
 import ProtectedRoute from './components/ProtectedRoute'
 import { useAuth } from './context/AuthContext'
 
@@ -41,6 +42,11 @@ function App() {
       <Route path='/goals' element={
         <ProtectedRoute>
           <Goals />
+        </ProtectedRoute>
+      } />
+      <Route path='investments' element={
+        <ProtectedRoute>
+          <Investments />
         </ProtectedRoute>
       } />
     </Routes>
