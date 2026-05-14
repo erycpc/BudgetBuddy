@@ -1,3 +1,4 @@
+import path from 'path'
 import express from 'express'
 import cors from 'cors'
 import dotenv from 'dotenv'
@@ -7,8 +8,14 @@ import expenseRoutes from './routes/expenseRoutes.js'
 import budgetRoutes from './routes/budgetRoutes.js'
 import goalRoutes from './routes/goalRoutes.js'
 import investmentRoutes from './routes/investmentRoutes.js'
+import aiRoutes from './routes/aiRoutes.js'
+import { fileURLToPath } from 'url'
 
-dotenv.config()
+
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+dotenv.config({ path: `${__dirname}/.env` })
 
 // validate env variables
 if (!process.env.MONGO_URI) {
@@ -39,6 +46,6 @@ app.use('/api/expenses', expenseRoutes)
 app.use('/api/budgets', budgetRoutes)
 app.use('/api/goals', goalRoutes)
 app.use('/api/investments', investmentRoutes)
-
+app.use('/api/ai', aiRoutes)
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
