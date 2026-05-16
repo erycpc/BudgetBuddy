@@ -1548,3 +1548,117 @@ button[type='submit']:disabled {
   cursor: pointer;
   margin-top: 0.5rem;
 }
+
+/* ───── Notifications ───── */
+.notif-wrapper {
+  position: relative;
+}
+
+.dash-bell {
+  position: relative;
+}
+
+.notif-badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--error);
+  color: white;
+  font-size: 0.6rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 320px;
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  z-index: 100;
+  overflow: hidden;
+  animation: fadeDown 0.15s ease;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.notif-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.notif-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.notif-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.notif-list {
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.notif-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 0.875rem 1.25rem;
+  border-bottom: 1px solid #1e1e1e;
+  transition: background 0.15s;
+}
+
+.notif-item:hover { background: var(--surface-2); }
+.notif-item:last-child { border-bottom: none; }
+
+.notif-item.danger { border-left: 3px solid var(--error); }
+.notif-item.warning { border-left: 3px solid #febc2e; }
+.notif-item.success { border-left: 3px solid var(--green); }
+
+.notif-icon {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.notif-content {
+  flex: 1;
+}
+
+.notif-item-title {
+  font-size: 0.825rem;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.notif-item-msg {
+  font-size: 0.775rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.notif-empty {
+  padding: 2rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
