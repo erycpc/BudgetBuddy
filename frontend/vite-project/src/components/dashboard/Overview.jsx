@@ -4,6 +4,7 @@ import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
   Tooltip, ResponsiveContainer
 } from 'recharts'
+import { SkeletonCard } from '../Skeleton'
 
 const filters = ['Weekly', 'Monthly', 'Yearly', 'Range']
 
@@ -49,13 +50,13 @@ const Overview = () => {
   const [activeFilter, setActiveFilter] = useState('Yearly')
   const [monthlyData, setMonthlyData] = useState([])
   const [allExpenses, setAllExpenses] = useState([])
+  const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState({
     totalExpenses: 0,
     totalBudgets: 0,
     totalGoals: 0
   })
 
-  // fetch all data once on mount
   useEffect(() => {
     const fetchStats = async () => {
       try {
@@ -75,12 +76,13 @@ const Overview = () => {
 
       } catch (err) {
         console.error(err)
+      } finally {
+        setLoading(false)
       }
     }
     fetchStats()
   }, [])
 
-  // refilter whenever activeFilter or allExpenses changes
   useEffect(() => {
     if (allExpenses.length === 0) return
 
@@ -173,31 +175,39 @@ const Overview = () => {
         </div>
       </div>
 
-      <div className="bottom-cards">
-        <div className="bottom-card">
-          <p className="bottom-card-label">Total Expenses</p>
-          <p className="bottom-card-value">
-            KES {stats.totalExpenses.toLocaleString()}
-          </p>
-          <p className="bottom-card-sub">
-            {stats.totalExpenses === 0 ? 'No expenses yet' : 'All time spending'}
-          </p>
+      {loading ? (
+        <div className="bottom-cards">
+          <SkeletonCard />
+          <SkeletonCard />
+          <SkeletonCard />
         </div>
-        <div className="bottom-card">
-          <p className="bottom-card-label">Active Budgets</p>
-          <p className="bottom-card-value">{stats.totalBudgets}</p>
-          <p className="bottom-card-sub">
-            {stats.totalBudgets === 0 ? 'No budgets set' : 'Categories tracked'}
-          </p>
+      ) : (
+        <div className="bottom-cards">
+          <div className="bottom-card">
+            <p className="bottom-card-label">Total Expenses</p>
+            <p className="bottom-card-value">
+              KES {stats.totalExpenses.toLocaleString()}
+            </p>
+            <p className="bottom-card-sub">
+              {stats.totalExpenses === 0 ? 'No expenses yet' : 'All time spending'}
+            </p>
+          </div>
+          <div className="bottom-card">
+            <p className="bottom-card-label">Active Budgets</p>
+            <p className="bottom-card-value">{stats.totalBudgets}</p>
+            <p className="bottom-card-sub">
+              {stats.totalBudgets === 0 ? 'No budgets set' : 'Categories tracked'}
+            </p>
+          </div>
+          <div className="bottom-card">
+            <p className="bottom-card-label">Savings Goals</p>
+            <p className="bottom-card-value">{stats.totalGoals}</p>
+            <p className="bottom-card-sub">
+              {stats.totalGoals === 0 ? 'No goals yet' : 'Goals in progress'}
+            </p>
+          </div>
         </div>
-        <div className="bottom-card">
-          <p className="bottom-card-label">Savings Goals</p>
-          <p className="bottom-card-value">{stats.totalGoals}</p>
-          <p className="bottom-card-sub">
-            {stats.totalGoals === 0 ? 'No goals yet' : 'Goals in progress'}
-          </p>
-        </div>
-      </div>
+      )}
     </div>
   )
 }

@@ -1473,3 +1473,41 @@ button[type='submit']:disabled {
     font-size: 0.7rem;
   }
 }
+
+/* ───── Skeleton loading ───── */
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    #1e1e1e 25%,
+    #2a2a2a 50%,
+    #1e1e1e 75%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  display: block;
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+.skeleton-card {
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.skeleton-expense-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--surface);
+  border: 1px solid #2a2a2a;
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem;
+}

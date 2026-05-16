@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import api from '../services/api'
 import Sidebar from '../components/dashboard/Sidebar'
 import DashboardHeader from '../components/dashboard/DashboardHeader'
+import { SkeletonCard } from '../components/Skeleton'
 
 const Investments = () => {
   const [investments, setInvestments] = useState([])
@@ -151,7 +152,9 @@ const Investments = () => {
           )}
 
           {loading ? (
-            <p className="loading-text">Loading investments...</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {[...Array(4)].map((_, i) => <SkeletonCard key={i} />)}
+            </div>
           ) : investments.length === 0 ? (
             <div className="empty-state">
               <p>No investments yet</p>
