@@ -1321,3 +1321,155 @@ button[type='submit']:disabled {
 .sidebar-ai:hover {
   background: rgba(61, 255, 84, 0.15);
 }
+
+/* ───── Mobile Responsive ───── */
+@media (max-width: 768px) {
+
+  /* hide search and user info on mobile */
+  .dash-search,
+  .dash-user-info,
+  .dash-bell {
+    display: none;
+  }
+
+  .dash-header {
+    padding: 1rem;
+  }
+
+  .dash-title {
+    font-size: 1.2rem;
+  }
+
+  .dash-user {
+    padding: 0.4rem;
+  }
+
+  .dash-user-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  /* dashboard content padding */
+  .dashboard-content {
+    padding: 1rem;
+  }
+
+  /* revenue card */
+  .revenue-card-top {
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .revenue-filters {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filter-btn {
+    flex: 1;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 5px 6px;
+  }
+
+  .revenue-amount {
+    font-size: 1.5rem;
+  }
+
+  /* bottom cards */
+  .bottom-cards {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .bottom-card-value {
+    font-size: 1.25rem;
+  }
+
+  /* expenses header */
+  .expenses-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .btn-add {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* form rows go single column */
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  /* budget cards */
+  .budget-card-top {
+    flex-wrap: wrap;
+  }
+
+  /* goals grid */
+  .goals-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* portfolio summary */
+  .portfolio-summary {
+    grid-template-columns: 1fr;
+  }
+
+  /* settings grid */
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* AI panel full screen on mobile */
+  .ai-panel {
+    width: 100%;
+  }
+
+  /* section title */
+  .section-title {
+    font-size: 1.1rem;
+  }
+
+  /* investment items wrap */
+  .investment-item {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .investment-right {
+    text-align: left;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    width: 52px;
+  }
+
+  .dash-title {
+    font-size: 1rem;
+  }
+
+  .revenue-amount {
+    font-size: 1.25rem;
+  }
+
+  .bottom-cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .bottom-card {
+    padding: 1rem 0.75rem;
+  }
+
+  .bottom-card-value {
+    font-size: 1rem;
+  }
+
+  .bottom-card-label {
+    font-size: 0.7rem;
+  }
+}
