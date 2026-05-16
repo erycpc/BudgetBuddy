@@ -61,6 +61,22 @@ const navItems = [
   { to: '/settings', icon: 'settings', label: 'Settings' },
 ]
 
+const Logo = () => (
+  <svg width="38" height="38" viewBox="0 0 56 56" xmlns="http://www.w3.org/2000/svg">
+    <rect width="56" height="56" rx="12" fill="#3dff54"/>
+    <text
+      x="28"
+      y="43"
+      textAnchor="middle"
+      fontFamily="system-ui, sans-serif"
+      fontWeight="800"
+      fontSize="32"
+      fill="#0a0a0a"
+      letterSpacing="-2"
+    >BB</text>
+  </svg>
+)
+
 const Sidebar = ({ onAIToggle }) => {
   const { user, logout } = useAuth()
   const navigate = useNavigate()
@@ -70,13 +86,11 @@ const Sidebar = ({ onAIToggle }) => {
     navigate('/login')
   }
 
-  const initials = user?.name
-    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase()
-    : 'BB'
-
   return (
     <aside className="sidebar">
-      <div className="sidebar-avatar">{initials}</div>
+      <div className="sidebar-logo">
+        <Logo />
+      </div>
 
       <nav className="sidebar-nav">
         {navItems.map(item => (
