@@ -17,13 +17,14 @@ function App() {
       <Route path='/login' element={
         user ? <Navigate to='/dashboard' /> : <Login />
       } />
-      <Route path='/register' element={<Register />} />
+      <Route path='/register' element={
+        user ? <Navigate to='/dashboard' /> : <Register />
+      } />
       <Route path='/dashboard' element={
         <ProtectedRoute>
           <Dashboard />
         </ProtectedRoute>
       } />
-      <Route path='*' element={<Navigate to='/login' />} />
       <Route path='/expenses' element={
         <ProtectedRoute>
           <Expenses />
@@ -32,11 +33,6 @@ function App() {
       <Route path='/budgets' element={
         <ProtectedRoute>
           <Budgets />
-      </ProtectedRoute>
-      } />
-      <Route path='/settings' element={
-        <ProtectedRoute>
-          <Settings />
         </ProtectedRoute>
       } />
       <Route path='/goals' element={
@@ -44,11 +40,17 @@ function App() {
           <Goals />
         </ProtectedRoute>
       } />
-      <Route path='investments' element={
+      <Route path='/investments' element={
         <ProtectedRoute>
           <Investments />
         </ProtectedRoute>
       } />
+      <Route path='/settings' element={
+        <ProtectedRoute>
+          <Settings />
+        </ProtectedRoute>
+      } />
+      <Route path='*' element={<Navigate to='/login' />} />
     </Routes>
   )
 }
