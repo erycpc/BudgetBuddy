@@ -2,7 +2,7 @@
 
 > A full-stack personal finance web application built on the MERN stack with AI-powered financial advisory.
 
-![BudgetBuddy](https://img.shields.io/badge/version-1.0.0-green) ![License](https://img.shields.io/badge/license-MIT-green) ![Node](https://img.shields.io/badge/node-v22+-green) ![React](https://img.shields.io/badge/react-v18+-green)
+![BudgetBuddy](https://img.shields.io/badge/version-1.0.0-green) ![Node](https://img.shields.io/badge/node-v22+-green) ![React](https://img.shields.io/badge/react-v18+-green)
 
 ---
 
